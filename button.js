@@ -14,7 +14,7 @@ class Btn {
             height: height
         };
         this.btnScaling = {
-            hover: 1.04,
+            hover: 1.02,
             mouseDown: 0.98
         }
         this.possibleBounds = {
@@ -31,12 +31,13 @@ class Btn {
                 height: height * this.btnScaling.hover
             },
             mouseDown: {
-                x: x,
-                y: y,
-                width: width,
-                height: height
+                x: x - (width * this.btnScaling.mouseDown - width) / 2,
+                y: y - (height * this.btnScaling.mouseDown - height) / 2,
+                width: width * this.btnScaling.mouseDown,
+                height: height * this.btnScaling.mouseDown
             }
-        }
+        };
+        this.callback = callback;
     }
 
     init() {
@@ -50,17 +51,19 @@ class Btn {
 
         this.mouseUp_listener = this.mouseUp_listener.bind(this);
         this.canvas.addEventListener('mouseup', this.mouseUp_listener);
+
+        this.click_listener = this.click_listener.bind(this);
+        this.canvas.addEventListener('mouseup', this.click_listener);
+    }
+
+    click_listener(event) {
+        if (this.isMouseColliding(event)) {
+            this.callback();
+        }
     }
 
     mouseDown_listener(event) {
-        const rect = this.canvas.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
-
-        if (
-            (mouseX >= this.bounds.x && mouseX <= this.bounds.x + this.bounds.width) &&
-            (mouseY >= this.bounds.y && mouseY <= this.bounds.y + this.bounds.height)
-        ) {
+        if (this.isMouseColliding(event)) {
             this.status.mouseDown = true;
         } else {
             this.status.mouseDown = false;
@@ -74,21 +77,25 @@ class Btn {
     }
 
     hover_listener(event) {
+        if (this.isMouseColliding(event)) {
+            this.status.hover = true;
+            //this.canvas.style.cursor = 'pointer';
+        } else {
+            this.status.hover = false;
+            //this.canvas.style.cursor = 'default'; //cursor styling must be global bc. it will be overwritten by other buttons
+        }
+        this.draw();
+    }
+
+    isMouseColliding(event) {
         const rect = this.canvas.getBoundingClientRect();
         const mouseX = event.clientX - rect.left;
         const mouseY = event.clientY - rect.top;
 
-        if (
+        return (
             (mouseX >= this.bounds.x && mouseX <= this.bounds.x + this.bounds.width) &&
             (mouseY >= this.bounds.y && mouseY <= this.bounds.y + this.bounds.height)
-        ) {
-            this.status.hover = true;
-            this.canvas.style.cursor = 'pointer';
-        } else {
-            this.status.hover = false;
-            this.canvas.style.cursor = 'default';
-        }
-        this.draw();
+        );
     }
 
     draw() {
