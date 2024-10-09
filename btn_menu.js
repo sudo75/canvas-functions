@@ -10,7 +10,7 @@ class Btn_Menu {
         this.btn_dimensions = {
             width: 200,
             height: 50
-        }
+        };
         this.menuX = x;
         this.menuY = y;
     }

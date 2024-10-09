@@ -3,6 +3,7 @@ class Btn {
         this.canvas = canvas;
         this.ctx = ctx;
         this.txt = txt;
+        this.currentTextIndex = 0;
         this.status = {
             hover: false,
             mouseDown: false
@@ -38,6 +39,7 @@ class Btn {
             }
         };
         this.callback = callback;
+        this.fillColour = 'lightgrey';
     }
 
     init() {
@@ -58,6 +60,10 @@ class Btn {
 
     click_listener(event) {
         if (this.isMouseColliding(event)) {
+            //Update btn text
+            this.currentTextIndex = this.currentTextIndex >= this.txt.length - 1 ? 0: this.currentTextIndex + 1;
+            this.draw();
+
             this.callback();
         }
     }
@@ -109,11 +115,10 @@ class Btn {
             this.bounds = this.possibleBounds.default;
         }
 
-        const fillColour = 'lightgrey';
         //Draw btn
         this.ctx.beginPath();
         this.ctx.rect(this.bounds.x, this.bounds.y, this.bounds.width, this.bounds.height);
-        this.ctx.fillStyle = fillColour;
+        this.ctx.fillStyle = this.fillColour;
         this.ctx.fillRect(this.bounds.x, this.bounds.y, this.bounds.width, this.bounds.height);
         this.ctx.strokeStyle = "black";
         this.ctx.lineWidth = 2;
@@ -131,8 +136,7 @@ class Btn {
         const textY = this.bounds.y + this.bounds.height / 2;
     
         // Draw the text (centered)
-        this.ctx.fillText(this.txt, textX, textY);
-
+        this.ctx.fillText(this.txt[this.currentTextIndex], textX, textY);
     }
 }
 
