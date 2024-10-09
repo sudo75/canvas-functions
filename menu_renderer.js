@@ -1,7 +1,7 @@
 import {Btn_Menu} from './btn_menu.js';
 
 class Menu_Renderer {
-    constructor(title, subtitle, version, btns, width, height) {
+    constructor(title, subtitle, version, btns, width, height, canvas) {
         this.title = title;
         this.subtitle = subtitle;
         this.btns = btns;
@@ -13,7 +13,7 @@ class Menu_Renderer {
 
         this.version = version;
         
-        this.canvas = document.querySelector('.canvas');
+        this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
 
         this.width = width;
