@@ -18,6 +18,8 @@ class Menu_Renderer {
 
         this.width = width;
         this.height = height;
+
+        this.btn_menu = null;
     }
     init() {
         this.canvas.width = this.width;
@@ -51,12 +53,16 @@ class Menu_Renderer {
         //Menu
         const menuY = subtitleY + this.font.subtitle.size + 10;
         const menu = new Btn_Menu(this.canvas, this.ctx, this.btns, 10, menuY);
+
+        this.btn_menu = menu;
+
         menu.btn_dimensions.width = this.canvas.width - 20; //margin of 10 on each side
         menu.init();
     }
 
     close() {
         this.ctx.clearRect(0, 0, this.width, this.height);
+        this.btn_menu.removeListeners();
     }
 }
 

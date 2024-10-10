@@ -40,6 +40,13 @@ class Btn {
         };
         this.callback = callback;
         this.fillColour = 'lightgrey';
+        this.listeners = [];
+    }
+
+    removeListeners() {
+        this.listeners.forEach(listener => {
+            this.canvas.removeEventListener(listener.type, listener.callback);
+        });
     }
 
     init() {
@@ -56,6 +63,13 @@ class Btn {
 
         this.click_listener = this.click_listener.bind(this);
         this.canvas.addEventListener('mouseup', this.click_listener);
+
+        this.listeners = [
+            {type: 'mousemove', callback: this.hover_listener},
+            {type: 'mousedown', callback: this.mouseDown_listener},
+            {type: 'mouseup', callback: this.mouseUp_listener},
+            {type: 'mouseup', callback: this.click_listener}
+        ];
     }
 
     click_listener(event) {

@@ -52,6 +52,14 @@ class Btn_Menu {
             }
         }
     }
+
+    removeListeners() {
+        this.canvas.removeEventListener('mousemove', this.hover_listener);
+        this.btn_objects.forEach(btn_obj => {
+            btn_obj.removeListeners();
+        });
+        this.canvas.style.cursor = 'default';
+    }
 }
 
 export { Btn_Menu };
