@@ -54,6 +54,10 @@ class Menu_Renderer {
         menu.btn_dimensions.width = this.canvas.width - 20; //margin of 10 on each side
         menu.init();
     }
+
+    close() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+    }
 }
 
 export { Menu_Renderer };
