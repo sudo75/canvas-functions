@@ -22,6 +22,8 @@ class Menu_Renderer {
         this.btn_menu = null;
     }
     init() {
+        this.canvas.style.pointerEvents = 'default';
+
         this.canvas.width = this.width;
         this.canvas.height = this.height;
 
@@ -61,6 +63,7 @@ class Menu_Renderer {
     }
 
     close() {
+        this.canvas.style.pointerEvents = 'none';
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.btn_menu.removeListeners();
     }
