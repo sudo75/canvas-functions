@@ -16,6 +16,7 @@ class Btn_Menu {
     }
 
     init() {
+        this.canvas.style.pointerEvents = 'default';
         this.draw();
 
         this.hover_listener = this.hover_listener.bind(this);
