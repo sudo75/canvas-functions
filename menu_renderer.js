@@ -29,6 +29,13 @@ class Menu_Renderer {
 
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
+
+        if (this.subtitle === null) {
+            this.font.subtitle.size = 0;
+        }
+        if (this.version === null) {
+            this.font.version.size = 0;
+        }
     
         //Title
         const titleX = this.canvas.width / 2;
