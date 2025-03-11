@@ -20,6 +20,8 @@ class Menu_Renderer {
         this.height = height;
 
         this.btn_menu = null;
+
+        this.isOpen = false;
     }
     init() {
         this.canvas.style.pointerEvents = 'default';
@@ -67,12 +69,16 @@ class Menu_Renderer {
 
         menu.btn_dimensions.width = this.canvas.width - 20; //margin of 10 on each side
         menu.init();
+
+        this.isOpen = true;
     }
 
     close() {
         this.canvas.style.pointerEvents = 'none';
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.btn_menu.removeListeners();
+        
+        this.isOpen = false;
     }
 }
 
